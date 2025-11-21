@@ -17,17 +17,17 @@ class DataPathArgs:
     """
 
     data_path: Path = Path(
-        "ln_shared_data/onestop/processed"
+        #"ln_shared_data/onestop/processed"
+        "/srv/storage/sharedFolder/processed_ao_renamed"
     )  # Path to the data directory. Can be used specify a common path for all data files.
     et_data_path: Path = (
-        data_path / "ia_data_enriched_360_05052024.csv"
+        #data_path / "ia_data_enriched_360_05052024.csv"
+        data_path / "ia_reports/ia_data_enriched_360_20112025.csv"
     )  # Full path to the interest area report
     fixations_enriched_path: Path = (
-        data_path / "fixation_data_enriched_360_05052024.csv"
+        data_path / "fixation_reports/fixation_data_enriched_360_20112025.csv"#fixation_data_enriched_360_05052024.csv"
     )  # Full path to the fixation report
-    text_data_path: Path = (
-        data_path / "all_dat_files_merged.tsv"  # TODO Can be updated (needed?)
-    )  # Full path to the experiment dat files.
+    text_data_path: Path = (data_path / "all_dat_files_merged.tsv")  # Full path to the experiment dat files.
 
 
 @register_config(group=GROUP)

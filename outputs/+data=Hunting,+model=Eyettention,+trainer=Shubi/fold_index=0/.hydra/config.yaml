@@ -1,0 +1,161 @@
+data_path:
+  data_path: !!python/object/apply:pathlib.PosixPath
+  - ln_shared_data
+  - onestop
+  - processed
+  et_data_path: !!python/object/apply:pathlib.PosixPath
+  - ln_shared_data
+  - onestop
+  - processed
+  - ia_data_enriched_360_05052024.csv
+  fixations_enriched_path: !!python/object/apply:pathlib.PosixPath
+  - ln_shared_data
+  - onestop
+  - processed
+  - fixation_data_enriched_360_05052024.csv
+  text_data_path: !!python/object/apply:pathlib.PosixPath
+  - ln_shared_data
+  - onestop
+  - processed
+  - all_dat_files_merged.tsv
+model:
+  batch_size: 64
+  model_params:
+    model_name: EYETTENTION_MODEL
+    class_weights: null
+    concat_or_duplicate: CONCAT
+    prepend_eye_data: false
+    item_level_features_mode: DAVID
+    LSTM_hidden_dim: 128
+    num_LSTM_layers: 8
+    LSTM_dropout: 0.2
+    fc_dropout: 0.2
+    embedding_dropout: 0.2
+  backbone: ROBERTA_LARGE
+  use_fixation_report: true
+  text_dim: 1024
+  prediction_config:
+    prediction_mode: IS_CORRECT
+    class_names:
+    - BCD
+    - A
+    target_column: IS_CORRECT
+    use_eyes_only: false
+    add_answers: false
+  max_seq_len: 313
+  max_eye_len: 300
+  contrastive_loss_embd_dim: 1024
+  accumulate_grad_batches: 4
+  eyes_dim: 33
+  fixation_dim: 47
+  feature_mode: EYES_WORDS
+  word_features:
+  - gpt2_Surprisal
+  - Wordfreq_Frequency
+  - Length
+  - start_of_line
+  - end_of_line
+  - Is_Content_Word
+  - n_Lefts
+  - n_Rights
+  - Distance2Head
+  eye_features:
+  - IA_DWELL_TIME
+  - IA_DWELL_TIME_%
+  - IA_FIXATION_%
+  - IA_FIXATION_COUNT
+  - IA_REGRESSION_IN_COUNT
+  - IA_REGRESSION_OUT_FULL_COUNT
+  - IA_RUN_COUNT
+  - IA_FIRST_FIXATION_DURATION
+  - IA_FIRST_FIXATION_VISITED_IA_COUNT
+  - IA_FIRST_RUN_DWELL_TIME
+  - IA_FIRST_RUN_FIXATION_COUNT
+  - IA_SKIP
+  - IA_REGRESSION_PATH_DURATION
+  - IA_REGRESSION_OUT_COUNT
+  - IA_SELECTIVE_REGRESSION_PATH_DURATION
+  - IA_LAST_FIXATION_DURATION
+  - IA_LAST_RUN_DWELL_TIME
+  - IA_LAST_RUN_FIXATION_COUNT
+  - IA_TOP
+  - IA_LEFT
+  - IA_FIRST_FIX_PROGRESSIVE
+  - normalized_ID
+  - PARAGRAPH_RT
+  - total_skip
+  ia_features:
+  - IA_FIRST_FIXATION_DURATION
+  - IA_DWELL_TIME
+  fixation_features:
+  - CURRENT_FIX_INTEREST_AREA_INDEX
+  - CURRENT_FIX_DURATION
+  - CURRENT_FIX_NEAREST_INTEREST_AREA_DISTANCE
+  ia_categorical_features:
+  - Is_Content_Word
+  - Reduced_POS
+  - Entity
+  - POS
+  - Head_Direction
+  - TRIAL_IA_COUNT
+  - TRIAL_IA_COUNT
+  - IA_REGRESSION_OUT_FULL_COUNT
+  - IA_FIXATION_COUNT
+  - IA_REGRESSION_IN_COUNT
+  add_beyelstm_features: false
+  n_tokens: 0
+  eye_token_id: 0
+  sep_token_id: 0
+  is_training: false
+  preorder: true
+  add_contrastive_loss: false
+trainer:
+  num_workers: 10
+  warmup_proportion: 0.06
+  max_epochs: 10
+  profiler: null
+  weight_decay: null
+  early_stopping_patience: 5
+  learning_rate: 1.0e-05
+  gradient_clip_val: null
+  accelerator: GPU
+  log_gradients: false
+  precision: THIRTY_TWO_TRUE
+  float32_matmul_precision: HIGH
+  seed: 42
+  devices: 1
+  run_mode: TRAIN
+  wandb_job_type: MISSING
+  wandb_project: reading-comprehension-from-eye-movements
+  wandb_entity: lacc-lab
+  wandb_notes: ''
+  do_fancy_sampling: true
+  samples_per_epoch: -1
+  max_time: null
+data:
+  fold_index: 0
+  overwrite_data: false
+  resplit_items_subjects: true
+  subject_column: participant_id
+  unique_item_column: unique_paragraph_id
+  normalization_mode: ALL
+  normalization_type: ROBUST_SCALER
+  unique_item_columns:
+  - article_batch
+  - article_id
+  - difficulty_level
+  - paragraph_id
+  ia_query: practice==0 & reread==0 & has_preview==1
+  fixation_query: practice==0 & reread==0 & CURRENT_FIX_INTEREST_AREA_INDEX >= 0 &
+    has_preview==1
+  item_defining_columns:
+  - article_batch
+  - article_id
+  item_subject_column: list_number
+  reread_column: repeated_reading_trial
+  question_ind_column: onestopqa_question_id
+  answer_order_column: answers_order
+  has_preview_column: question_preview
+  abcd_answer_column: selected_answer
+  groupby_columns: []
+eval_path: null

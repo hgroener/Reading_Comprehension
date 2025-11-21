@@ -817,7 +817,7 @@ class ETDataset(TorchDataset):
             input_masks_list.append(input_mask)
 
             y = trial_info[self.target_column]
-            labels_list.append(y)
+            labels_list.append(int(y))
 
             answer_map = self.determine_answer_map(
                 trial_info=trial_info, questions_order=questions_order

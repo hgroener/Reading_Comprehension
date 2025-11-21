@@ -2,18 +2,22 @@
 that is easier to work with."""
 
 from pathlib import Path
-
-import process_onestop_sr_report.preprocessing as prp
+import sys
+sys.path.append("/home/hgroener/gaze/RCP_clean_2/Reading-Comprehension-Prediction/")
+import process_onestop_sr_report_changed.process_onestop_sr_report.preprocessing as prp
 from datetime import datetime
 
 
 def process_data(mode: str):
-    data_path = f"/data/home/shared/onestop/p_{mode}_reports"
+
+    data_path = f"/srv/storage/hgroener/reading_comprehension/OneStop/onestop/renamed/{mode}_reports"
 
     today = datetime.today().strftime("%d%m%Y")
     save_file = f"{mode}_data_enriched_360_{today}.csv"
     args_file = f"{mode}_preprocessing_args_360_{today}.json"
-    save_path = Path("/data/home/shared/onestop/processed")
+
+    save_path = Path(f"/srv/storage/hgroener/reading_comprehension/OneStop/processed_new/{mode}_reports")
+
     args = [
         "--data_path",
         data_path,

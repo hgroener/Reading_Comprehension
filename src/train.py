@@ -1,5 +1,6 @@
 """Main file for cognitive state decoding training"""
-
+import sys
+sys.path.append("/home/hgroener/gaze/RCP_clean_2/Reading-Comprehension-Prediction")
 import pprint
 from pathlib import Path
 
@@ -65,7 +66,7 @@ def main(cfg: Args) -> None:
     print(f"##### Work dir: {work_dir}")
     if cfg.trainer.run_mode != RunModes.FAST_DEV_RUN:
         wandb.init(
-            entity=cfg.trainer.wandb_entity,
+            entity="hansenpansen92-bielefeld-university",#cfg.trainer.wandb_entity,
             project=cfg.trainer.wandb_project,
             job_type=cfg.trainer.wandb_job_type,
             notes=cfg.trainer.wandb_notes,

@@ -32,7 +32,32 @@
 
 ## Usage
 
+### HG: Bugfixing Instructions
+
+run 
+
+```bash
+python src/train.py +model="Eyettention" +trainer="Shubi"
+```
+It will try to run training with the data stored at "/srv/storage/sharedFolder/processed_ao_renamed".
+The path can be changed at "/src/configs/data_path_args.py"
+After processing the data it should throw the error: 
+
+```bash
+ValueError: __len__() should return >= 0
+```
+
+The datamodule is of the class ETDataset which is imported from "/src/datamodule.py".
+When running with another trainer e.g. Eyettention it throws the error:
+
+```bash
+IndexError: pop from empty list
+```
+Thanks a lot for helping! 
+
+
 ### Training
+
 
 1. **Default Training:**
 
